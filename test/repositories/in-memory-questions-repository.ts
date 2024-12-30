@@ -4,8 +4,8 @@ import { Question } from '@/domain/forum/enterprise/entities/question'
 
 export class InMemoryQuestionRepository implements QuestionsRepository {
   public items: Question[] = []
-  
-  async findManyRecents({page}: PaginationParams) {
+
+  async findManyRecents({ page }: PaginationParams) {
     const questions = this.items
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
       .slice((page - 1) * 20, page * 20)
@@ -19,7 +19,7 @@ export class InMemoryQuestionRepository implements QuestionsRepository {
   }
   async findById(id: string) {
     const question = this.items.find((item) => item.id.toString() === id)
-    
+
     if (!question) {
       return null
     }
