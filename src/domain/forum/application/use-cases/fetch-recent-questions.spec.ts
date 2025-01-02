@@ -15,11 +15,11 @@ describe('Get question by slug', () => {
     await inMemoryQuestionRepository.create(makeQuestion({ createdAt: new Date(2024, 11, 20) }))
     await inMemoryQuestionRepository.create(makeQuestion({ createdAt: new Date(2024, 11, 13) }))
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 1
     })
 
-    expect(questions).toEqual([
+    expect(result.value?.questions).toEqual([
       expect.objectContaining({ createdAt: new Date(2024, 11, 20) }),
       expect.objectContaining({ createdAt: new Date(2024, 11, 13) }),
       expect.objectContaining({ createdAt: new Date(2024, 11, 12) })
@@ -32,11 +32,11 @@ describe('Get question by slug', () => {
       await inMemoryQuestionRepository.create(makeQuestion({ createdAt: new Date(2024, 11, i) }))
     }
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 2
     })
 
-    expect(questions).toEqual([
+    expect(result.value?.questions).toEqual([
       expect.objectContaining({ createdAt: new Date(2024, 11, 2) }),
       expect.objectContaining({ createdAt: new Date(2024, 11, 1) }),
     ])

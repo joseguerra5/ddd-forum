@@ -17,13 +17,13 @@ describe('Create a answer comment', () => {
   it('should be able create a answer comment', async () => {
     await inMemoryAnswerRepository.create(makeAnswer({ authorId: new UniqueEntityId("author-01") }))
 
-    const { answerComment } = await sut.execute({
+    const result = await sut.execute({
       authorId: "author-01",
       content: "example-01",
       answerId: inMemoryAnswerRepository.items[0].id.toString()
     })
 
-    expect(answerComment.id).toBeTruthy()
-    expect(inMemoryAnswerCommentRepository.items[0].id).toBe(answerComment.id)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswerCommentRepository.items[0]).toEqual(result.value?.answerComment)
   })
 })

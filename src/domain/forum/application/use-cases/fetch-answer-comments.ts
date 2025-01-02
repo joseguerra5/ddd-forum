@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/either'
 import { AnswerComment } from '../../enterprise/entities/answer-comment'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 
@@ -6,9 +7,9 @@ interface FetchAnswerCommentsUseCaseRequest {
   page: number
 }
 
-interface FetchAnswerCommentsUseCaseReponse {
+type FetchAnswerCommentsUseCaseReponse = Either<null,{
   answersComments: AnswerComment[]
-}
+}> 
 
 export class FetchAnswerCommentsUseCase {
   // dependencias
@@ -20,8 +21,8 @@ export class FetchAnswerCommentsUseCase {
   }: FetchAnswerCommentsUseCaseRequest): Promise<FetchAnswerCommentsUseCaseReponse> {
     const answersComments = await this.answersCommentsRepository.findManyByAnswerId(answerId, { page })
 
-    return {
+    return right({
       answersComments
-    }
+    })
   }
 }

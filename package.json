@@ -8,7 +8,7 @@
     "test": "vitest run",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "test:watch": "vitest --src"
+    "test:watch": "vitest"
   },
   "author": "José Guerra",
   "license": "ISC",

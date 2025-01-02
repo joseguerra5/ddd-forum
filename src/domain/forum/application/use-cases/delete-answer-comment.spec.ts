@@ -1,6 +1,7 @@
 import { InMemoryAnswerCommentRepository } from 'test/repositories/in-memory-answer-comments-repository'
 import { DeleteAnswerCommentUseCase } from './delete-answer-comment'
 import { makeAnswerComment } from 'test/factories/make-answer-comment'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let iMemoryAnswerCommentRepository: InMemoryAnswerCommentRepository
 let sut: DeleteAnswerCommentUseCase
@@ -16,13 +17,13 @@ describe('Delete a answer comment', () => {
 
     await iMemoryAnswerCommentRepository.create(newAnswerComment)
 
-    await sut.execute({
+    const result = await sut.execute({
       authorId: newAnswerComment.authorId.toString(),
       answerCommentId: newAnswerComment.id.toString()
     })
 
 
-    expect(iMemoryAnswerCommentRepository.items).toHaveLength(0)
+    expect(result.isRight()).toBe(true)
   })
 
   it('not should be able to delete a answer comment with diferent authorId', async () => {
@@ -32,17 +33,13 @@ describe('Delete a answer comment', () => {
 
     await iMemoryAnswerCommentRepository.create(newAnswerComment)
 
-    await sut.execute({
-      authorId: newAnswerComment.authorId.toString(),
+
+    const result = await sut.execute({
+      authorId: "diferent-author-id",
       answerCommentId: newAnswerComment.id.toString()
     })
-
-    expect(() => {
-      return sut.execute({
-        authorId: "diferent-author-id",
-        answerCommentId: newAnswerComment.id.toString()
-      })
-    }).rejects.toBeInstanceOf(Error)
-
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
+    
 })

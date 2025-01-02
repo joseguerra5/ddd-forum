@@ -16,12 +16,12 @@ describe('Get answers by question Id', () => {
     await inMemoryAnswersRepository.create(makeAnswer({ questionId: new UniqueEntityId("question-01") }))
     await inMemoryAnswersRepository.create(makeAnswer({ questionId: new UniqueEntityId("question-01") }))
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       questionId: "question-01",
       page: 1
     })
 
-    expect(answers).toHaveLength(3)
+    expect(result.value?.answers).toHaveLength(3)
   })
 
   it('should be able to fetch paginated recent answers', async () => {
@@ -30,10 +30,10 @@ describe('Get answers by question Id', () => {
       await inMemoryAnswersRepository.create(makeAnswer({ questionId: new UniqueEntityId("question-01") }))
     }
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       questionId: "question-01",
       page: 2
     })
-    expect(answers).toHaveLength(2)
+    expect(result.value?.answers).toHaveLength(2)
   })
 })

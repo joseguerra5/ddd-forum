@@ -17,7 +17,6 @@ describe('Delete a question', () => {
       authorId: new UniqueEntityId("author-01")
     }, new UniqueEntityId("question-01"))
 
-    console.log(newQuestion)
     await inMemoryQuestionRepository.create(newQuestion)
 
     await sut.execute({
@@ -35,15 +34,13 @@ describe('Delete a question', () => {
       authorId: new UniqueEntityId("author-01")
     }, new UniqueEntityId("question-01"))
 
-    console.log(newQuestion)
     await inMemoryQuestionRepository.create(newQuestion)
 
-    expect(() => {
-       return sut.execute({
+    const result = await sut.execute({
         questionId: "question-01",
         authorId: "author-02"
       })
-    }).rejects.toBeInstanceOf(Error)
   
+      expect(result.value).toBeInstanceOf(Error)
   })
 })

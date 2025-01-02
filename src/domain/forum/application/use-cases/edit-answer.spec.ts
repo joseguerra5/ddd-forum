@@ -39,16 +39,14 @@ describe('Edit a answer', () => {
       authorId: new UniqueEntityId("author-01")
     }, new UniqueEntityId("answer-01"))
 
-    console.log(newAnswer)
     await inMemoryAnswerRepository.create(newAnswer)
 
-    expect(() => {
-       return sut.execute({
+    const result = await sut.execute({
         answerId: "answer-01",
         authorId: "author-02",
         content: "example-01",
       })
-    }).rejects.toBeInstanceOf(Error)
+    expect(result.value).toBeInstanceOf(Error)
   
   })
 })
