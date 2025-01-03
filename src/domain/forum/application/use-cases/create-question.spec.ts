@@ -14,9 +14,11 @@ describe('Create a question', () => {
       content: 'nova resposta',
       authorId: '01',
       title: 'Nova pergunta',
+      attachmentsIds: ["1", "2"]
     })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryQuestionRepository.items[0]).toEqual(result.value?.question)
+    expect(inMemoryQuestionRepository.items[0].attachments.currentItems).toHaveLength(2)
   })
 })
