@@ -3,22 +3,22 @@ import { Answer } from "../../enterprise/entities/answer";
 import { Question } from "../../enterprise/entities/question";
 import { AnswersRepository } from "../repositories/answer-repository";
 import { QuestionsRepository } from "../repositories/questions-repository";
-import { NotAllowedError } from "./errors/not-allowed-error";
-import { ResouceNotFoundError } from "./errors/resource-not-found-error";
+import { NotAllowedError } from "@/core/errors/not-allowed-error";
+import { ResouceNotFoundError } from "@/core/errors/resource-not-found-error";
 
 interface ChooseQuestionBestAnswerAnswerUseCaseRequest {
   authorId: string
   answerId: string
 }
 
-type  ChooseQuestionBestAnswerAnswerUseCaseResponse = Either<NotAllowedError | ResouceNotFoundError, {
+type ChooseQuestionBestAnswerAnswerUseCaseResponse = Either<NotAllowedError | ResouceNotFoundError, {
   question: Question
 }>
 export class ChooseQuestionBestAnswerAnswerUseCase {
   constructor(
     private answerRepository: AnswersRepository,
     private questionRepository: QuestionsRepository
-  ) {}
+  ) { }
   async execute({
     answerId,
     authorId
@@ -48,6 +48,6 @@ export class ChooseQuestionBestAnswerAnswerUseCase {
 
     await this.questionRepository.save(question)
 
-    return right({question})
+    return right({ question })
   }
 }

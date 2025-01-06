@@ -14,6 +14,7 @@ describe('Create a answer', () => {
       content: 'nova resposta',
       instructorId: '01',
       questionId: '01',
+      attachmentsIds: []
     })
 
     expect(result.isRight()).toBe(true)

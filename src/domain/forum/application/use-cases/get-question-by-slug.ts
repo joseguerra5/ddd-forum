@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/either'
-import { UniqueEntityId } from '../../../../core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
-import { ResouceNotFoundError } from './errors/resource-not-found-error'
+import { ResouceNotFoundError } from '@/core/errors/resource-not-found-error'
 
 interface GetQuestionBySlugUseCaseRequest {
   slug: string
@@ -10,7 +10,7 @@ interface GetQuestionBySlugUseCaseRequest {
 
 type GetQuestionBySlugUseCaseReponse = Either<ResouceNotFoundError, {
   question: Question
-}> 
+}>
 
 export class GetQuestionBySlugUseCase {
   // dependencias
